@@ -75,8 +75,7 @@
             position: relative;
             z-index: 11;
         }
-        /* تعديل برمي صريح لرفع القطط فوق كل النصوص والخلفيات */
-        .gif-container {
+        .video-container {
             width: 100%;
             height: 160px;
             display: flex;
@@ -84,14 +83,13 @@
             align-items: center;
             margin-bottom: 20px;
             position: relative;
-            z-index: 99; /* تضمن الظهور فوق النصوص وفي المقدمة */
+            z-index: 99;
         }
-        .gif-container img {
-            max-width: 100%;
-            max-height: 160px;
+        .video-container video {
+            width: 100%;
+            height: 160px;
             object-fit: contain;
             border-radius: 12px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
         .buttons {
             display: flex;
@@ -147,9 +145,12 @@
     <div class="overlay" id="bgOverlay"></div>
 
     <div class="content-wrapper" id="mainBox">
-        <div class="gif-container">
-            <!-- كود ذكي ومجرب ومحمي لإجبار الصورة على الظهور مهما كانت صيغتها المرفوعة -->
-            <img id="statusGif" src="cats.jpg" onerror="this.src='cats.gif'; this.onerror=function(){this.src='cats.png'; this.onerror=function(){this.src='cats.JPG'; this.onerror=function(){this.src='cute(MP4).mp4';}}};" alt="Cute Cats">
+        <!-- تشغيل فيديو القطط المتحرك بشكل تلقائي ومستمر وصامت ليعمل على كل الهواتف -->
+        <div class="video-container" id="vidBox">
+            <video autoplay loop muted playsinline>
+                <source src="cute(MP4).mp4" type="video/mp4">
+                <source src="cats.jpg" type="video/mp4">
+            </video>
         </div>
 
         <div class="message-text" id="question">هلا يالطولك غصن يتمايل بگلبي
@@ -177,24 +178,12 @@
             const urls = [
                 'girl.jpg', 'girl.png', 'girl.jpeg', 'girl.JPG',
                 '%D8%B5%D9%88%D8%B1%D8%A9%20%D9%81%D8%AA%D8%A7%D8%A9.jpg',
-                '%D8%B5%D9%88%D8%B1%D8%A9%20%D9%81%D8%AA%D8%A7%D8%A9.png',
-                '%D8%B5%D9%88%D8%B1%D8%A9%20%D9%81%D8%AA%D8%A7%D8%A9.jpeg'
+                '%D8%B5%D9%88%D8%B1%D8%A9%20%D9%81%D8%AA%D8%A7%D8%A9.png'
             ];
-            
             let img = new Image();
             let index = 0;
-            
-            img.onload = function() {
-                bgElement.style.backgroundImage = "url('" + urls[index] + "')";
-            };
-            
-            img.onerror = function() {
-                index++;
-                if (index < urls.length) {
-                    img.src = urls[index];
-                }
-            };
-            
+            img.onload = function() { bgElement.style.backgroundImage = "url('" + urls[index] + "')"; };
+            img.onerror = function() { index++; if (index < urls.length) { img.src = urls[index]; } };
             img.src = urls[index];
         }
 
@@ -214,14 +203,13 @@
         function selectYes() {
             const bgSecond = document.getElementById('bgSecond');
             const bgOverlay = document.getElementById('bgOverlay');
-            
             tryLoadGirlImage(bgSecond);
             
             bgSecond.style.display = 'block';
             bgOverlay.style.display = 'block';
             setTimeout(() => { bgSecond.style.opacity = '1'; }, 50);
 
-            document.getElementById('statusGif').style.display = 'none';
+            document.getElementById('vidBox').style.display = 'none';
             document.getElementById('question').innerHTML = "اني وياك وأتحمل كل ضروفك\nلو تغیب سنین صدك ما أعوفك .";
             document.getElementById('mainBox').style.background = "rgba(255, 255, 255, 0.75)";
             document.getElementById('btnGroup').style.display = 'none';
