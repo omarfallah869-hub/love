@@ -75,9 +75,9 @@
             position: relative;
             z-index: 11;
         }
-        .video-container {
+        .gif-container {
             width: 100%;
-            height: 160px;
+            height: 150px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -85,9 +85,9 @@
             position: relative;
             z-index: 99;
         }
-        .video-container video {
-            width: 100%;
-            height: 160px;
+        .gif-container img {
+            max-width: 100%;
+            max-height: 150px;
             object-fit: contain;
             border-radius: 12px;
         }
@@ -145,12 +145,8 @@
     <div class="overlay" id="bgOverlay"></div>
 
     <div class="content-wrapper" id="mainBox">
-        <!-- تشغيل فيديو القطط المتحرك بشكل تلقائي ومستمر وصامت ليعمل على كل الهواتف -->
-        <div class="video-container" id="vidBox">
-            <video autoplay loop muted playsinline>
-                <source src="cute(MP4).mp4" type="video/mp4">
-                <source src="cats.jpg" type="video/mp4">
-            </video>
+        <div class="gif-container">
+            <img id="statusGif" src="https://media.giphy.com/media/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Cute Cats">
         </div>
 
         <div class="message-text" id="question">هلا يالطولك غصن يتمايل بگلبي
@@ -209,7 +205,7 @@
             bgOverlay.style.display = 'block';
             setTimeout(() => { bgSecond.style.opacity = '1'; }, 50);
 
-            document.getElementById('vidBox').style.display = 'none';
+            document.getElementById('statusGif').style.display = 'none';
             document.getElementById('question').innerHTML = "اني وياك وأتحمل كل ضروفك\nلو تغیب سنین صدك ما أعوفك .";
             document.getElementById('mainBox').style.background = "rgba(255, 255, 255, 0.75)";
             document.getElementById('btnGroup').style.display = 'none';
