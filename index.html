@@ -6,7 +6,7 @@
     <title>إلى آياتي 💖</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kufam:wght@600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kufam:wght=600;800&display=swap" rel="stylesheet">
     <style>
         body {
             display: flex;
@@ -38,8 +38,6 @@
             left: 0;
             width: 100%;
             height: 100%;
-            /* تم التعديل لتقرأ الاسم العربي لملفك مباشرة */
-            background-image: url('%D8%B5%D9%88%D8%B1%D8%A9%20%D9%81%D8%AA%D8%A7%D8%A9.jpg');
             background-size: cover;
             background-position: center;
             z-index: 2;
@@ -141,7 +139,8 @@
 
     <div class="content-wrapper" id="mainBox">
         <div class="gif-container">
-            <img id="statusGif" src="cats.jpg" alt="Cute Cats">
+            <!-- كود ذكي لتجربة صيغ صورة القطط المتنوعة لكي تظهر فوراً -->
+            <img id="statusGif" src="cats.jpg" onerror="this.src='cats.gif'; this.onerror=function(){this.src='cats.png'; this.onerror=function(){this.src='cats.JPG';}};" alt="Cute Cats">
         </div>
 
         <div class="message-text" id="question">هلا يالطولك غصن يتمايل بگلبي
@@ -152,7 +151,7 @@
 
 بكثر ما واكف متانيك
 كعد ضلي وبقيت اني
-حبيبي مشتاقلي ？?</div>
+حبيبي مشتاقلي ؟؟</div>
 
         <div class="buttons" id="btnGroup">
             <button id="yesBtn" onclick="selectYes()">نعم</button>
@@ -165,6 +164,32 @@
     <audio id="loveSong" src="song.mp3" preload="auto"></audio>
 
     <script>
+        // دالة ذكية لتجربة الصيغ المختلفة لصورة الخلفية (العربية والإنجليزية)
+        function tryLoadGirlImage(bgElement) {
+            const urls = [
+                'girl.jpg', 'girl.png', 'girl.jpeg', 'girl.JPG',
+                '%D8%B5%D9%88%D8%B1%D8%A9%20%D9%81%D8%AA%D8%A7%D8%A9.jpg',
+                '%D8%B5%D9%88%D8%B1%D8%A9%20%D9%81%D8%AA%D8%A7%D8%A9.png',
+                '%D8%B5%D9%88%D8%B1%D8%A9%20%D9%81%D8%AA%D8%A7%D8%A9.jpeg'
+            ];
+            
+            let img = new Image();
+            let index = 0;
+            
+            img.onload = function() {
+                bgElement.style.backgroundImage = "url('" + urls[index] + "')";
+            };
+            
+            img.onerror = function() {
+                index++;
+                if (index < urls.length) {
+                    img.src = urls[index];
+                }
+            };
+            
+            img.src = urls[index];
+        }
+
         function moveButton(e) {
             e.preventDefault();
             const noBtn = document.getElementById('noBtn');
@@ -181,6 +206,9 @@
         function selectYes() {
             const bgSecond = document.getElementById('bgSecond');
             const bgOverlay = document.getElementById('bgOverlay');
+            
+            tryLoadGirlImage(bgSecond);
+            
             bgSecond.style.display = 'block';
             bgOverlay.style.display = 'block';
             setTimeout(() => { bgSecond.style.opacity = '1'; }, 50);
