@@ -20,16 +20,32 @@
             position: relative;
             background-color: #ffb6c1;
         }
-        .bg-image {
+        .bg-first {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1517841905240-472988babdf9?q=80&w=1000&auto=format&fit=crop');
+            background-color: #ffb6c1;
+            background-image: radial-gradient(#fff 10%, transparent 10%), radial-gradient(#fff 10%, transparent 10%);
+            background-size: 30px 30px;
+            background-position: 0 0, 15px 15px;
+            z-index: 1;
+        }
+        .bg-second {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            /* تم التعديل لتقرأ الاسم العربي لملفك مباشرة */
+            background-image: url('%D8%B5%D9%88%D8%B1%D8%A9%20%D9%81%D8%AA%D8%A7%D8%A9.jpg');
             background-size: cover;
             background-position: center;
-            z-index: 1;
+            z-index: 2;
+            opacity: 0;
+            display: none;
+            transition: opacity 0.8s ease;
         }
         .overlay {
             position: fixed;
@@ -37,8 +53,9 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(255, 182, 193, 0.4);
-            z-index: 2;
+            background: rgba(255, 182, 193, 0.3);
+            z-index: 3;
+            display: none;
         }
         .content-wrapper {
             text-align: center;
@@ -46,7 +63,7 @@
             width: 310px;
             position: relative;
             z-index: 10;
-            background: rgba(255, 255, 255, 0.85);
+            background: rgba(255, 255, 255, 0.9);
             border-radius: 20px;
             box-shadow: 0 8px 30px rgba(0,0,0,0.15);
         }
@@ -60,16 +77,17 @@
         }
         .gif-container {
             width: 100%;
-            height: 140px;
+            height: 150px;
             display: flex;
             justify-content: center;
             align-items: center;
             margin-bottom: 20px;
         }
         .gif-container img {
-            max-width: 140px;
-            max-height: 140px;
+            max-width: 100%;
+            max-height: 150px;
             object-fit: contain;
+            border-radius: 10px;
         }
         .buttons {
             display: flex;
@@ -117,12 +135,13 @@
 </head>
 <body>
 
-    <div class="bg-image" id="bgImg"></div>
-    <div class="overlay"></div>
+    <div class="bg-first" id="bgFirst"></div>
+    <div class="bg-second" id="bgSecond"></div>
+    <div class="overlay" id="bgOverlay"></div>
 
-    <div class="content-wrapper">
+    <div class="content-wrapper" id="mainBox">
         <div class="gif-container">
-            <img id="statusGif" src="https://media.giphy.com/media/cLS1cfxvGOPVpf9g3y/giphy.gif" alt="Asking GIF">
+            <img id="statusGif" src="cats.jpg" alt="Cute Cats">
         </div>
 
         <div class="message-text" id="question">هلا يالطولك غصن يتمايل بگلبي
@@ -133,7 +152,7 @@
 
 بكثر ما واكف متانيك
 كعد ضلي وبقيت اني
-حبيبي مشتاقلي ؟؟</div>
+حبيبي مشتاقلي ？?</div>
 
         <div class="buttons" id="btnGroup">
             <button id="yesBtn" onclick="selectYes()">نعم</button>
@@ -143,7 +162,7 @@
         <div id="loveName" class="name-style">آياتي🥹❤️</div>
     </div>
 
-    <audio id="loveSong" src="https://v.kiwi/v/e9qctf12un8h.mp3" preload="auto"></audio>
+    <audio id="loveSong" src="song.mp3" preload="auto"></audio>
 
     <script>
         function moveButton(e) {
@@ -160,10 +179,18 @@
         }
 
         function selectYes() {
+            const bgSecond = document.getElementById('bgSecond');
+            const bgOverlay = document.getElementById('bgOverlay');
+            bgSecond.style.display = 'block';
+            bgOverlay.style.display = 'block';
+            setTimeout(() => { bgSecond.style.opacity = '1'; }, 50);
+
+            document.getElementById('statusGif').style.display = 'none';
             document.getElementById('question').innerHTML = "اني وياك وأتحمل كل ضروفك\nلو تغیب سنین صدك ما أعوفك .";
-            document.getElementById('statusGif').src = "https://media.giphy.com/media/KztT2c4u8mYYUiBtOh/giphy.gif";
+            document.getElementById('mainBox').style.background = "rgba(255, 255, 255, 0.75)";
             document.getElementById('btnGroup').style.display = 'none';
             document.getElementById('loveName').style.display = 'block';
+            
             const audio = document.getElementById('loveSong');
             audio.play().catch(function(error) { console.log("Audio play failed"); });
             setInterval(createHeart, 250);
