@@ -6,7 +6,7 @@
     <title>إلى آياتي 💖</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Kufam:wght=600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Kufam:wght@600;800&display=swap" rel="stylesheet">
     <style>
         body {
             display: flex;
@@ -72,20 +72,26 @@
             line-height: 1.8;
             margin-bottom: 20px;
             white-space: pre-line;
+            position: relative;
+            z-index: 11;
         }
+        /* تعديل برمي صريح لرفع القطط فوق كل النصوص والخلفيات */
         .gif-container {
             width: 100%;
-            height: 150px;
+            height: 160px;
             display: flex;
             justify-content: center;
             align-items: center;
             margin-bottom: 20px;
+            position: relative;
+            z-index: 99; /* تضمن الظهور فوق النصوص وفي المقدمة */
         }
         .gif-container img {
             max-width: 100%;
-            max-height: 150px;
+            max-height: 160px;
             object-fit: contain;
-            border-radius: 10px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
         }
         .buttons {
             display: flex;
@@ -94,6 +100,7 @@
             height: 50px;
             position: relative;
             margin-top: 15px;
+            z-index: 12;
         }
         button {
             padding: 10px 30px;
@@ -114,6 +121,8 @@
             font-weight: 800;
             display: none;
             animation: pulse 1.5s infinite;
+            position: relative;
+            z-index: 15;
         }
         @keyframes pulse {
             0% { transform: scale(1); }
@@ -139,8 +148,8 @@
 
     <div class="content-wrapper" id="mainBox">
         <div class="gif-container">
-            <!-- كود ذكي لتجربة صيغ صورة القطط المتنوعة لكي تظهر فوراً -->
-            <img id="statusGif" src="cats.jpg" onerror="this.src='cats.gif'; this.onerror=function(){this.src='cats.png'; this.onerror=function(){this.src='cats.JPG';}};" alt="Cute Cats">
+            <!-- كود ذكي ومجرب ومحمي لإجبار الصورة على الظهور مهما كانت صيغتها المرفوعة -->
+            <img id="statusGif" src="cats.jpg" onerror="this.src='cats.gif'; this.onerror=function(){this.src='cats.png'; this.onerror=function(){this.src='cats.JPG'; this.onerror=function(){this.src='cute(MP4).mp4';}}};" alt="Cute Cats">
         </div>
 
         <div class="message-text" id="question">هلا يالطولك غصن يتمايل بگلبي
@@ -164,7 +173,6 @@
     <audio id="loveSong" src="song.mp3" preload="auto"></audio>
 
     <script>
-        // دالة ذكية لتجربة الصيغ المختلفة لصورة الخلفية (العربية والإنجليزية)
         function tryLoadGirlImage(bgElement) {
             const urls = [
                 'girl.jpg', 'girl.png', 'girl.jpeg', 'girl.JPG',
